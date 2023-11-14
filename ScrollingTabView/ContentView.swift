@@ -75,9 +75,9 @@ struct ContentView: View {
     }
     @ViewBuilder
     func CustomTabBar()-> some View {
-        HStack(spacing: 0) {
+        HStack(spacing: 5) {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
-                HStack(spacing: 6) {
+                HStack(spacing: 5) {
                     Image(systemName: tab.systemImage)
                     
                     Text(tab.rawValue)
@@ -106,7 +106,7 @@ struct ContentView: View {
             }
         }
         .background(.gray.opacity(0.1), in: .capsule)
-        .padding(.horizontal, 15)
+        .padding(.horizontal, 6)
     }
 }
 
