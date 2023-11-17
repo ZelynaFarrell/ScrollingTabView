@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab: Tab?
+    @State private var selectedTab: Tab? = .keypad
     @Environment(\.colorScheme) private var scheme
     @State private var tabProgress: CGFloat = 0
     @State private var searchText = ""
+    
+    let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W", "X","Y", "Z", "#"]
+    
+    private var gridItemLayout = [
+        GridItem(.fixed(100)),
+        GridItem(.fixed(100)),
+        GridItem(.fixed(100))
+                 ]
     
     var body: some View {
         NavigationStack {
@@ -34,11 +42,11 @@ struct ContentView: View {
                                 .id(Tab.recents)
                                 .containerRelativeFrame(.horizontal)
                             
-                            Text("Contacts")
+                           ContactsView()
                                 .id(Tab.all)
                                 .containerRelativeFrame(.horizontal)
                             
-                            Text("Keypad")
+                            KeypadView()
                                 .id(Tab.keypad)
                                 .containerRelativeFrame(.horizontal)
                             
@@ -109,6 +117,60 @@ struct ContentView: View {
         }
         .background(.gray.opacity(0.1), in: .capsule)
         .padding(.horizontal, 5)
+    }
+    
+    @ViewBuilder
+    func ContactsView()-> some View {
+        HStack {
+            VStack {
+                ScrollView(.vertical) {
+                    ForEach(alphabet, id: \.self) { letter in
+                            Text(letter)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.leading, 5)
+                        Divider()
+                        
+                    }
+                }
+            }
+            .padding(.horizontal, 20)
+            .overlay {
+                VStack(alignment: .listRowSeparatorLeading, spacing: 2) {
+                    ForEach(alphabet, id: \.self) { letter in
+                        Button {
+                        } label: {
+                            Text(letter)
+                                .font(.system(size: 12))
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.trailing, 14)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    func KeypadView()-> some View {
+        ZStack {
+            LazyVGrid(columns: gridItemLayout) {
+                ForEach(1...9, id: \.self) { n in
+                    ZStack {
+                        Circle()
+                            .fill(.gray.opacity(0.3))
+                            .frame(width: 90, height: 90)
+                        
+                        
+                        Text("\(n)")
+                            .font(.largeTitle)
+                            .padding(.top, 3)
+                        if n != 1 {
+                            Text("A")
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 
