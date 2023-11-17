@@ -23,9 +23,9 @@ enum Tab: String, CaseIterable {
         case .all:
             return "person.circle"
         case .keypad:
-            return "clock"
+            return "circle.grid.3x3.fill"
         case .voicemail:
-            return "phone"
+            return "recordingtape"
             
         }
     }

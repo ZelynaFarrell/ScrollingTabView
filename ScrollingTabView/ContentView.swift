@@ -34,7 +34,7 @@ struct ContentView: View {
                                 .id(Tab.recents)
                                 .containerRelativeFrame(.horizontal)
                             
-                            Text("All")
+                            Text("Contacts")
                                 .id(Tab.all)
                                 .containerRelativeFrame(.horizontal)
                             
@@ -86,7 +86,7 @@ struct ContentView: View {
                         .font(.footnote)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 8)
+                .padding(.vertical, 10)
                 .contentShape(.capsule)
                 .onTapGesture {
                     withAnimation(.snappy) {
