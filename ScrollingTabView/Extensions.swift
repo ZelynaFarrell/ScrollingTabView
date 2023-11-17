@@ -36,6 +36,8 @@ extension View {
                 .foregroundStyle(.gray)
             
             self
+                .foregroundStyle(.blue)
+                .background(.white)
                 .symbolVariant(.fill)
                 .mask {
                     GeometryReader {

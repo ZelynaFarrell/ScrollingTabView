@@ -11,80 +11,82 @@ struct ContentView: View {
     @State private var selectedTab: Tab?
     @Environment(\.colorScheme) private var scheme
     @State private var tabProgress: CGFloat = 0
+    @State private var searchText = ""
     
     var body: some View {
-        VStack(spacing: 15) {
-            
-            HStack {
+        NavigationStack {
+            VStack {
+                Rectangle()
+                    .fill(.gray.opacity(0.6))
+                    .frame(height: 0.5)
+                    .padding(.horizontal, 18)
+                
+                GeometryReader {
+                    let size = $0.size
+                    
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: 0) {
+                            Text("Favorites")
+                                .id(Tab.favorites)
+                                .containerRelativeFrame(.horizontal)
+                            
+                            Text("Recents")
+                                .id(Tab.recents)
+                                .containerRelativeFrame(.horizontal)
+                            
+                            Text("All")
+                                .id(Tab.all)
+                                .containerRelativeFrame(.horizontal)
+                            
+                            Text("Keypad")
+                                .id(Tab.keypad)
+                                .containerRelativeFrame(.horizontal)
+                            
+                            Text("Voicemail")
+                                .id(Tab.voicemail)
+                                .containerRelativeFrame(.horizontal)
+                        }
+                        .scrollTargetLayout()
+                        .offsetX { value in
+                            let progress = -value / (size.width * CGFloat(Tab.allCases.count - 1))
+                            
+                            tabProgress = max(min(progress, 1), 0)
+                        }
+                    }
+                    .scrollPosition(id: $selectedTab)
+                    .scrollIndicators(.hidden)
+                    .scrollTargetBehavior(.paging)
+                    .scrollClipDisabled()
+                }
+                
+                CustomTabBar()
+            }
+            .background(.gray.opacity(0.1))
+            .navigationTitle("Contacts")
+            .searchable(text: $searchText)
+            .toolbar {
                 Button {
                 } label: {
-                    Image(systemName: "line.3.horizontal.decrease")
-                }
-                
-                Spacer()
-                
-                Text("Contacts")
-                    .font(.title3).bold()
-                
-                Spacer()
-                
-                Button {
-                } label: {
-                    Image(systemName: "bell.badge")
+                    Image(systemName: "plus")
                 }
             }
-            .font(.title2)
-            .foregroundStyle(.primary)
-            .padding([.horizontal, .top], 18)
-            .padding(.bottom, 5)
-            
-            CustomTabBar()
-            
-            GeometryReader {
-                let size = $0.size
-                
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: 0) {
-                        Text("Favorites")
-                            .id(Tab.favorites)
-                            .containerRelativeFrame(.horizontal)
-                        
-                        Text("Recents")
-                            .id(Tab.recents)
-                            .containerRelativeFrame(.horizontal)
-                        
-                       Text("Voicemail")
-                            .id(Tab.voicemail)
-                            .containerRelativeFrame(.horizontal)
-                    }
-                    .scrollTargetLayout()
-                    .offsetX { value in
-                        let progress = -value / (size.width * CGFloat(Tab.allCases.count - 1))
-                        
-                        tabProgress = max(min(progress, 1), 0)
-                    }
-                }
-                .scrollPosition(id: $selectedTab)
-                .scrollIndicators(.hidden)
-                .scrollTargetBehavior(.paging)
-                .scrollClipDisabled()
-            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        .background(.gray.opacity(0.1))
     }
+    
     @ViewBuilder
     func CustomTabBar()-> some View {
         HStack(spacing: 5) {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
-                HStack(spacing: 5) {
+                VStack(spacing: 5) {
                     Image(systemName: tab.systemImage)
                     
+                    
                     Text(tab.rawValue)
-                        .font(.body)
+                        .font(.footnote)
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 15)
+                .padding(.vertical, 8)
                 .contentShape(.capsule)
                 .onTapGesture {
                     withAnimation(.snappy) {
@@ -106,7 +108,7 @@ struct ContentView: View {
             }
         }
         .background(.gray.opacity(0.1), in: .capsule)
-        .padding(.horizontal, 6)
+        .padding(.horizontal, 5)
     }
 }
 
