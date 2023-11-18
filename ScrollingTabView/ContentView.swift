@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab: Tab? = .all
     @Environment(\.colorScheme) private var scheme
+    @State private var selectedTab: Tab? = .all
     @State private var tabProgress: CGFloat = 0
-    @State private var searchShown = false
     @State private var searchText = ""
+//    @State private var searchText = ""
+    
+    @State private var selectedLetter = "A"
+    @StateObject var countryCodeViewModel = CountryCodeViewModel()
+    
+//    init {
+////        self.countryCodeViewModel = countryCodeViewModel
+//        UITextField.appearance().clearButtonMode = .whileEditing
+//    }
     
     let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W", "X","Y", "Z", "#"]
     
@@ -140,6 +148,7 @@ struct ContentView: View {
                     
                     TextField("Search", text: $searchText)
                         .font(.callout)
+                        .foregroundStyle(.primary)
                     
                     
                     Spacer()
@@ -160,68 +169,66 @@ struct ContentView: View {
                 
             }
             
-            HStack {
-                VStack {
-                    ScrollView(.vertical) {
-                        
-                        HStack(spacing: 15) {
-                            Circle()
-                                .frame(width: 70, height: 70)
-                            
-                            VStack(alignment: .leading) {
-                                Text("Zelyna Farrell")
-                                    .font(.title3)
-                                    .fontWeight(.medium)
-                                
-                                Text("My Card")
-                                    .font(.footnote)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                        }
-                        .padding(.vertical)
-                        
-                        ForEach(alphabet, id: \.self) { letter in
-                            
-                            VStack(alignment: .leading) {
-                                Section {
-                                    Text("Name")
-                                    Divider()
-                                } header: {
-                                    Text(letter)
-                                        .font(.footnote).bold()
-                                        .foregroundStyle(.gray)
-                                    Divider()
-                                }
-                            }
-                            
-                        }
-                        .padding(.horizontal, 20)
-                    }
+            contactsListView
+                .overlay(alignment: .trailing) {
+                    lettersView
                 }
-                .overlay {
-                    VStack(alignment: .listRowSeparatorLeading, spacing: 2) {
-                        ForEach(alphabet, id: \.self) { letter in
-                            Button {
-                            } label: {
-                                Text(letter)
-                                    .font(.system(size: 12))
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .padding(.trailing, 6)
-                            }
-                        }
-                    }
-                }
-            }
         }
         .padding(.horizontal)
-        .onAppear {
-            searchShown = true
-        }
-        .onDisappear {
-            searchShown = false
-        }
     }
+    
+    
+     var contactsListView: some View {
+         ScrollViewReader { value in
+             ScrollView {
+                 personalCard
+                 LazyVStack(pinnedViews:[.sectionHeaders]) {
+                     ForEach(alphabet, id: \.self) { letter in
+                         Section(header: CountrySectionHeaderView(text: letter)) {
+                             ForEach(countryCodeViewModel.countries
+                                .filter{(countryModel) -> Bool in countryModel.name.prefix(1) == letter && self.searchForCountry(countryModel.name)}
+                                     , id: \.id) { country in
+//                             ForEach(countryCodeViewModel.countries.filter{(countryModel) -> Bool in countryModel.name.prefix(1) == letter && self.searchForCountry(countryModel.name)}, id: \.id) { country in
+//                                 if searchText.isEmpty {
+                                     CountryItemView(country: country)
+//                                 } else {
+//                                 
+//                                 }
+                             }
+                         }
+                     }
+                 }
+              
+                 .onChange(of: selectedLetter) { old, new in
+                     withAnimation {
+                         selectedLetter = new
+                         value.scrollTo(selectedLetter, anchor: .topLeading)
+                     }
+                 }
+             }
+         }
+     }
+     
+     var lettersView: some View {
+         VStack(alignment: .listRowSeparatorLeading, spacing: 2) {
+             ForEach(alphabet, id: \.self) { letter in
+                 Button {
+                     withAnimation(.smooth) {
+                         selectedLetter = letter
+                     }
+                 } label: {
+                     Text(letter)
+                         .font(.system(size: 12))
+                         .contentShape(.rect)
+                 }
+             }
+         }
+         .padding(.top)
+     }
+    
+     func searchForCountry(_ txt: String) -> Bool {
+         return (txt.lowercased(with: .current).hasPrefix(searchText.lowercased(with: .current)) || searchText.isEmpty)
+     }
     
     @ViewBuilder
     func FavoritesView()-> some View {
@@ -246,6 +253,35 @@ struct ContentView: View {
                 .foregroundStyle(.gray)
         }
     }
+    
+    var personalCard: some View {
+        HStack(spacing: 15) {
+            ZStack {
+                Circle()
+                    .fill(.gray.opacity(0.3))
+                Text("Z")
+                    .font(.largeTitle).bold()
+                    .foregroundStyle(.white)
+            }
+            .frame(width: 70, height: 70)
+            
+            VStack(alignment: .leading) {
+                Text("Zelyna Farrell")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                
+                Text("My Card")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+            }
+            Spacer()
+        }
+        .padding(.vertical)
+    }
+
+    
+    
+    
     
     
     @ViewBuilder
@@ -365,5 +401,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(countryCodeViewModel: CountryCodeViewModel())
 }
