@@ -15,12 +15,6 @@ struct ContentView: View {
     
     let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W", "X","Y", "Z", "#"]
     
-    private var gridItemLayout = [
-        GridItem(.fixed(100)),
-        GridItem(.fixed(100)),
-        GridItem(.fixed(100))
-                 ]
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -143,29 +137,6 @@ struct ContentView: View {
                                 .font(.system(size: 12))
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .padding(.trailing, 14)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func KeypadView()-> some View {
-        ZStack {
-            LazyVGrid(columns: gridItemLayout) {
-                ForEach(1...9, id: \.self) { n in
-                    ZStack {
-                        Circle()
-                            .fill(.gray.opacity(0.3))
-                            .frame(width: 90, height: 90)
-                        
-                        
-                        Text("\(n)")
-                            .font(.largeTitle)
-                            .padding(.top, 3)
-                        if n != 1 {
-                            Text("A")
                         }
                     }
                 }
