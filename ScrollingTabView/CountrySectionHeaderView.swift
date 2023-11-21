@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CountrySectionHeaderView: View {
+struct ContactsSectionHeaderView: View {
     let text: String
     
     var body: some View {
@@ -25,5 +25,5 @@ struct CountrySectionHeaderView: View {
 }
 
 #Preview {
-    CountrySectionHeaderView(text: "A")
+    ContactsSectionHeaderView(text: "A")
 }

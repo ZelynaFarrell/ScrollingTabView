@@ -7,22 +7,21 @@
 
 import SwiftUI
 
+// MAP ALPHABET TO DATA. REFER TO SSTACK OVERFLOW THEN UPDATE COMPUTED PROPERTY IN VIEWMODEL.
+// remove init for textfield if possible
+//REFACTOR CODE
+
 struct ContentView: View {
     @Environment(\.colorScheme) private var scheme
     @State private var selectedTab: Tab? = .all
     @State private var tabProgress: CGFloat = 0
-    @State private var searchText = ""
-//    @State private var searchText = ""
+    @StateObject var viewModel = CountryViewModel()
     
-    @State private var selectedLetter = "A"
-    @StateObject var countryCodeViewModel = CountryCodeViewModel()
+    init() {
+        UITextField.appearance().clearButtonMode = .whileEditing
+    }
     
-//    init {
-////        self.countryCodeViewModel = countryCodeViewModel
-//        UITextField.appearance().clearButtonMode = .whileEditing
-//    }
-    
-    let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W", "X","Y", "Z", "#"]
+  
     
     @State private var selectedOption = "All"
     var options = ["All", "Missed"]
@@ -146,7 +145,7 @@ struct ContentView: View {
                 HStack(alignment: .lastTextBaseline) {
                     Image(systemName: "magnifyingglass")
                     
-                    TextField("Search", text: $searchText)
+                    TextField("Search", text: $viewModel.searchText)
                         .font(.callout)
                         .foregroundStyle(.primary)
                     
@@ -183,26 +182,23 @@ struct ContentView: View {
              ScrollView {
                  personalCard
                  LazyVStack(pinnedViews:[.sectionHeaders]) {
-                     ForEach(alphabet, id: \.self) { letter in
-                         Section(header: CountrySectionHeaderView(text: letter)) {
-                             ForEach(countryCodeViewModel.countries
-                                .filter{(countryModel) -> Bool in countryModel.name.prefix(1) == letter && self.searchForCountry(countryModel.name)}
-                                     , id: \.id) { country in
-//                             ForEach(countryCodeViewModel.countries.filter{(countryModel) -> Bool in countryModel.name.prefix(1) == letter && self.searchForCountry(countryModel.name)}, id: \.id) { country in
-//                                 if searchText.isEmpty {
-                                     CountryItemView(country: country)
-//                                 } else {
-//                                 
-//                                 }
+                   
+                     ForEach(viewModel.alphabet, id: \.self) { letter in
+                         Section(header: ContactsSectionHeaderView(text: letter)) {
+                             ForEach(viewModel.filteredSearch)
+                             //                                .filter{(country) -> Bool in country.name.prefix(1) == letter && searchForCountry(country.name)}
+                             //                                     , id: \.id)
+                             { country in
+                                 CountryItemView(country: country)
                              }
                          }
                      }
                  }
               
-                 .onChange(of: selectedLetter) { old, new in
+                 .onChange(of: viewModel.selectedLetter) { old, new in
                      withAnimation {
-                         selectedLetter = new
-                         value.scrollTo(selectedLetter, anchor: .topLeading)
+                         viewModel.selectedLetter = new
+                         value.scrollTo(viewModel.selectedLetter, anchor: .topLeading)
                      }
                  }
              }
@@ -211,10 +207,10 @@ struct ContentView: View {
      
      var lettersView: some View {
          VStack(alignment: .listRowSeparatorLeading, spacing: 2) {
-             ForEach(alphabet, id: \.self) { letter in
+             ForEach(viewModel.alphabet, id: \.self) { letter in
                  Button {
                      withAnimation(.smooth) {
-                         selectedLetter = letter
+                         viewModel.selectedLetter = letter
                      }
                  } label: {
                      Text(letter)
@@ -227,7 +223,7 @@ struct ContentView: View {
      }
     
      func searchForCountry(_ txt: String) -> Bool {
-         return (txt.lowercased(with: .current).hasPrefix(searchText.lowercased(with: .current)) || searchText.isEmpty)
+         return (txt.lowercased(with: .current).hasPrefix(viewModel.searchText.lowercased(with: .current)) || viewModel.searchText.isEmpty)
      }
     
     @ViewBuilder
@@ -279,10 +275,6 @@ struct ContentView: View {
         .padding(.vertical)
     }
 
-    
-    
-    
-    
     
     @ViewBuilder
     func RecentsView()-> some View {
@@ -401,5 +393,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(countryCodeViewModel: CountryCodeViewModel())
+    ContentView()
 }

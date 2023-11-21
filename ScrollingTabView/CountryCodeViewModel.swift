@@ -7,18 +7,26 @@
 
 import Foundation
 
-class CountryCodeViewModel: ObservableObject {
-    var countries = [CountryModel]()
-//    let sections = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-//    @Published var countryCodeNumber = ""
-//    @Published var country = ""
-//    @Published var code = ""
+class CountryViewModel: ObservableObject {
+    @Published var countries = [CountryModel]()
+    @Published var searchText = ""
+    @Published var selectedLetter = "A"
     
-    init() {
-        loadCountryCodes()
+    let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W", "X","Y", "Z", "#"]
+    
+    var filteredSearch: [CountryModel] {
+        guard !searchText.isEmpty else { return countries }
+        return countries
+//            .filter { country in
+//           country.name.lowercased().contains(searchText.lowercased())
+//        }
     }
     
-    func loadCountryCodes(){
+    init() {
+        loadCountries()
+    }
+    
+    func loadCountries(){
         let countryCodesPath = Bundle.main.path(forResource: "CountryCodes", ofType: "json")!
         
         do {

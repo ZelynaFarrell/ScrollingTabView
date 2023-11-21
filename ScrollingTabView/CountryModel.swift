@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CountryModel: Codable, Identifiable {
+struct CountryModel: Codable, Identifiable, Hashable {
     var id = UUID()
     var name: String
     var dial_code: String

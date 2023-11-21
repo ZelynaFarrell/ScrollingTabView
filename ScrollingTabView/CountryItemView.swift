@@ -9,10 +9,6 @@ import SwiftUI
 
 struct CountryItemView: View {
     let country: CountryModel
-
-//    init(countryModel: CountryModel, selected: Bool) {
-//        self.countryModel = countryModel
-//    }
     
     var body: some View {
         VStack {

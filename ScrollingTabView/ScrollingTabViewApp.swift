@@ -11,7 +11,7 @@ import SwiftUI
 struct ScrollingTabViewApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(countryCodeViewModel: CountryCodeViewModel())
+            ContentView()
         }
     }
 }
