@@ -1,14 +1,14 @@
 //
-//  CountryItemView.swift
+//  ContactItem.swift
 //  ScrollingTabView
 //
-//  Created by Zelyna Sillas on 11/18/23.
+//  Created by Zelyna Sillas on 11/27/23.
 //
 
 import SwiftUI
 
-struct CountryItemView: View {
-    let country: CountryModel
+struct ContactItem: View {
+    let country: Country
     
     var body: some View {
         VStack {
@@ -24,7 +24,3 @@ struct CountryItemView: View {
         .padding(.horizontal, 19)
     }
 }
-
-//#Preview {
-//    ContentView()
-//}

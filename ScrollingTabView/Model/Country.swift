@@ -1,13 +1,13 @@
 //
-//  CountryModel.swift
+//  Country.swift
 //  ScrollingTabView
 //
-//  Created by Zelyna Sillas on 11/18/23.
+//  Created by Zelyna Sillas on 11/27/23.
 //
 
 import Foundation
 
-struct CountryModel: Codable, Identifiable, Hashable {
+struct Country: Codable, Identifiable, Hashable {
     var id = UUID()
     var name: String
     var dial_code: String
