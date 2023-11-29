@@ -16,7 +16,7 @@
 ### **Videos and Demos**
 | Scrolling Tab View |
 |:---------------:|
-|<img width="400" src="https://github.com/ZelynaFarrell/ScrollingTabView/assets/117409535/6c85e236-78b3-4b9e-b94d-341177b6b83e">|
+|<img width="400" src="https://github.com/ZelynaFarrell/ScrollingTabView/assets/117409535/7ffbf0d6-eb6b-47e1-bd09-34b47b3b2a8e">|
 
 
 #### **Usage**
