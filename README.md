@@ -1,4 +1,4 @@
-# <p align="center"><b> Scrolling Tab View </b></p>
+# <p align="center"><b> Automatic Scrolling Tab View </b></p>
 
 #### <p align="center"> This SwiftUI project showcases an automatic scrolling custom tab view with a twist - it incorporates UI elements inspired by the Apple Phone app. Utilizing the latest scrolling modifiers introduced in iOS 17, the project provides a seamless and visually appealing user experience.
 </p>
