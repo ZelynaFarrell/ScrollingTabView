@@ -8,7 +8,7 @@
 ## **Features**
 - <kbd style="background-color: #f0f0f0">Automatic Scrolling: </kbd> Tabs dynamically respond to user interactions, creating an intuitive scrolling experience.
 - <kbd style="background-color: #f0f0f0">Custom Tab Bar: </kbd> A modern tab bar design with clear icons and labels for each tab.
-- <kbd style="background-color: #f0f0f0">Apple Phone UI Elements: </kbd> Views that emulate Apple's Phone app, including Contacts, Recent Calls, Voicemail, etc.
+- <kbd style="background-color: #f0f0f0">Apple Phone UI Elements: </kbd> Views that emulate Apple's Phone app, including Contacts, Voicemail, etc.
 - <kbd style="background-color: #f0f0f0">Snappy Animation: </kbd> Smooth transitions between tabs enhance the overall user experience.
 
 <br>
