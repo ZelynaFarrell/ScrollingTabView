@@ -14,9 +14,9 @@
 <br>
 
 ### **Videos and Demos**
-| Home View |
+| Scrolling Tab View |
 |:---------------:|
-|<img width="400" src="https://github.com/ZelynaFarrell/WalletAppAnimation/assets/117409535/65bcac7f-1c19-4a66-b859-e08bded9b870">|
+|<img width="400" src="https://github.com/ZelynaFarrell/ScrollingTabView/assets/117409535/6c85e236-78b3-4b9e-b94d-341177b6b83e">|
 
 
 #### **Usage**
