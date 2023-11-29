@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.colorScheme) private var scheme
+    @StateObject var viewModel = ContactsViewModel()
     @State private var selectedTab: Tab? = .all
     @State private var tabProgress: CGFloat = 0
-    @StateObject var viewModel = ContactsViewModel()
     
     init() {
         UITextField.appearance().clearButtonMode = .whileEditing
@@ -19,7 +18,6 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            
             GeometryReader {
                 let size = $0.size
                 
@@ -62,7 +60,6 @@ struct ContentView: View {
         }
         .background(.gray.opacity(0.1))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-        
     }
     
     @ViewBuilder
@@ -71,7 +68,6 @@ struct ContentView: View {
             ForEach(Tab.allCases, id: \.rawValue) { tab in
                 VStack(spacing: 5) {
                     Image(systemName: tab.systemImage)
-                    
                     
                     Text(tab.rawValue)
                         .font(.footnote)
@@ -93,7 +89,7 @@ struct ContentView: View {
                 let capsuleWidth = size.width / CGFloat(Tab.allCases.count)
                 
                 Capsule()
-                    .fill(scheme == .dark ? .black : .white)
+                    .fill(.white)
                     .frame(width: capsuleWidth)
                     .offset(x: tabProgress * (size.width - capsuleWidth))
             }

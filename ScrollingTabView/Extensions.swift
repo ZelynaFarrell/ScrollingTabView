@@ -53,6 +53,6 @@ extension View {
     }
 }
 
-//#Preview {
-//    ContentView()
-//}
+#Preview {
+    ContentView()
+}

@@ -16,6 +16,7 @@ struct RecentsView: View {
             HStack(spacing: 50) {
                 Spacer()
                     .frame(width: 45)
+                
                 Button {
                 } label: {
                     Picker("picker", selection: $selectedOption) {
@@ -27,11 +28,7 @@ struct RecentsView: View {
                 }
                 .frame(width: 140)
                 
-                Button {
-                } label: {
-                    Text("Edit")
-                }
-            
+                Button("Edit") {}
             }
             
             VStack(alignment: .leading, spacing: 0) {
@@ -57,13 +54,14 @@ struct RecentsView: View {
                 Text("08:04")
                     .foregroundStyle(.secondary)
                     .font(.subheadline)
+                
                 Button {
                 } label: {
                     Image(systemName: "info.circle")
                         .font(.title2)
                 }
-               
             }
+            
             Divider()
             
             Spacer()

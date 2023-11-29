@@ -16,13 +16,10 @@ struct FavoritesView: View {
                     Image(systemName: "plus")
                 }
                 .frame(width: 250)
-              
                 
                 Text("Favorites").bold()
             }
             .offset(x: -130, y: -310)
-           
-           
             
             Text("No Favorites")
                 .font(.title2)

@@ -10,10 +10,6 @@ import SwiftUI
 struct ContactsView: View {
     @ObservedObject var viewModel: ContactsViewModel
     
-//    init() {
-//        UITextField.appearance().clearButtonMode = .whileEditing
-//    }
-    
     var body: some View {
         VStack {
             HStack {
@@ -24,6 +20,7 @@ struct ContactsView: View {
                         Text("Lists")
                     }
                 }
+                
                 Spacer()
                     .frame(width: 280)
                 
@@ -45,7 +42,6 @@ struct ContactsView: View {
                         .font(.callout)
                         .foregroundStyle(.primary)
                     
-                    
                     Spacer()
                     
                     Image(systemName: "mic.fill")
@@ -54,7 +50,6 @@ struct ContactsView: View {
                 .padding(7)
                 .background(.gray.opacity(0.15))
                 .cornerRadius(10)
-                
                 
                 Rectangle()
                     .fill(.gray.opacity(0.6))

@@ -25,6 +25,7 @@ struct KeypadView: View {
         VStack {
             Spacer()
                 .frame(height: 30)
+            
             LazyVGrid(columns: gridItemLayout) {
                 ForEach(keypadContent.sorted(by: <), id: \.key) { key, value in
                     Button {
